@@ -1,0 +1,24 @@
+{
+  "name": "x-cache",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zfeng217/x-cache.git"
+  },
+  "keywords": [
+    "cache",
+    "xCache",
+    "x-cache"
+  ],
+  "author": "zfeng217",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zfeng217/x-cache/issues"
+  },
+  "homepage": "https://github.com/zfeng217/x-cache#readme"
+}
