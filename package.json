@@ -4,7 +4,8 @@
   "description": "A finite key-value cache support multi cache algorithm (LRU, FIFO, LFU...).",
   "main": "dist/xcache.js",
   "scripts": {
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "test": "mocha test/"
   },
   "repository": {
     "type": "git",

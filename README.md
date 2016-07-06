@@ -99,6 +99,16 @@ Returns array {key, value}.
 Iterator, callback(key, value, obj).
 * fromHead: default false
 
+## Develop
+
+```
+$ npm install
+
+$ npm run build
+
+$ npm run test
+```
+
 ## Feedback
 
 If you any questions, use [Issues](https://github.com/zfeng217/x-cache/issues).   
