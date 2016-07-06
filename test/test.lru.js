@@ -77,7 +77,7 @@ describe('LRU Cache', function () {
         it('respond with matching records', function (done) {
             cache.shift();
             assert.equal(cache.getSize(), 2);
-            assert.equal(toString(cache), 'test:66 jerry:22 git');
+            assert.equal(toString(cache), 'test:66 jerry:22 ');
             done();
         });
     });
