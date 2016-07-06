@@ -97,23 +97,23 @@ export default class FifoXCache extends XCache {
         this._keymap = new Map();
     }
 
-    forEach(callback) {
-        let entry = this.tail;
+    forEach(callback, fromHead = false) {
+        let entry = fromHead ? this.head : this.tail;
         while (entry) {
             callback(entry.key, entry.value, entry);
-            entry = entry.older;
+            entry = fromHead ? entry.newer : entry.older;
         }
     }
 
-    getArray() {
+    getArray(fromHead = false) {
         let array = [],
-            entry = this.tail;
+            entry = fromHead ? this.head : this.tail;
         while (entry) {
             array.push({
                 key: entry.key,
                 value: entry.value
             });
-            entry = entry.older;
+            entry = fromHead ? entry.newer : entry.older;
         }
 
         return array;

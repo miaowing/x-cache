@@ -22,9 +22,9 @@ export default class XCache {
 
     removeAll() {}
 
-    forEach(callback) {}
+    forEach(callback, fromHead) {}
 
-    getArray(){}
+    getArray(fromHead){}
 
     getSize(){
         return this.size;
