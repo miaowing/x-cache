@@ -3,13 +3,14 @@
 A finite key-value cache support multi cache algorithm (LRU, FIFO, LFU...).
 
 ## Support cache algorithm
-
-* fifo      First in First out (FIFO)
-* lru       Least Recently Used (LRU)
-* lru-k     Least Recently Used K (LRU-K)      Todo
-* 2q        Two queues (2Q)                    Todo
-* lfu       Least Frequently Used (LFU)        Todo
-* ...
+| strategy      | description                   | todo  |
+| ------------- |:-----------------------------:| -----:|
+| fifo          | First in First out (FIFO)     |       |
+| lru           | Least Recently Used (LRU)     |       |
+| lru-k         | Least Recently Used K (LRU-K) | todo  |
+| 2q            | Two queues (2Q)               | todo  |
+| lfu           | Least Frequently Used (LFU)   | todo  |
+| ...           | ...                           | ...   |
 
 ## Usage
 
