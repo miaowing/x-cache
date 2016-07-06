@@ -69,6 +69,8 @@ Returns the value associated with key or undefined if not in the cache.
 
 ### XCache.prototype.shift(): Object entry
 
+Such as array.shift().
+
 ### XCache.prototype.find(key): Boolean bool
 
 Check the key is whether in cache or not.
@@ -96,3 +98,13 @@ Returns array {key, value}.
 
 Iterator, callback(key, value, obj).
 * fromHead: default false
+
+## Feedback
+
+If you any questions, use [Issues](https://github.com/zfeng217/x-cache/issues).   
+
+Sina Weibo: @赵小小峰
+
+## License
+
+MIT Licence.
