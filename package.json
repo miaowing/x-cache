@@ -1,7 +1,7 @@
 {
   "name": "x-cache",
   "version": "0.0.1",
-  "description": "",
+  "description": "A finite key-value cache support multi cache algorithm (LRU, FIFO, LFU...).",
   "main": "dist/xcache.js",
   "scripts": {
     "build": "node build/build.js"
