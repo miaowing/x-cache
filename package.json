@@ -2,9 +2,9 @@
   "name": "x-cache",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "dist/xcache.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "node build/build.js"
   },
   "repository": {
     "type": "git",
@@ -16,9 +16,18 @@
     "x-cache"
   ],
   "author": "zfeng217",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/zfeng217/x-cache/issues"
   },
-  "homepage": "https://github.com/zfeng217/x-cache#readme"
+  "homepage": "https://github.com/zfeng217/x-cache#readme",
+  "devDependencies": {
+    "babel-core": "^6.10.4",
+    "babel-preset-es2015-rollup": "^1.1.1",
+    "mocha": "^2.5.3",
+    "rollup": "^0.33.0",
+    "rollup-plugin-babel": "^2.6.1",
+    "rollup-plugin-replace": "^1.1.1",
+    "uglify-js": "^2.7.0"
+  }
 }

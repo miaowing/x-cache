@@ -10,31 +10,23 @@ export default class XCache {
         this._keymap = new Map();
     }
 
-    shift() {
+    shift() {}
 
-    }
+    put(key, value) {}
 
-    put() {
+    get(key, returnEntry) {}
 
-    }
+    find(key) {}
 
-    get() {
+    remove(key) {}
 
-    }
+    removeAll() {}
 
-    find() {
+    forEach(callback) {}
 
-    }
+    getArray(){}
 
-    remove() {
-
-    }
-
-    removeAll() {
-
-    }
-
-    forEach() {
-
+    getSize(){
+        return this.size;
     }
 }

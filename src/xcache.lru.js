@@ -47,7 +47,7 @@ export default class LruXCache extends XCache {
         if (entry === undefined) {
             entry = {key, value};
 
-            this._keymap.put(key, entry);
+            this._keymap.set(key, entry);
 
             if (this.size == this.limit) {
                 this.shift();
@@ -135,6 +135,24 @@ export default class LruXCache extends XCache {
     }
 
     forEach(callback) {
-        return this._keymap.forEach.bind(this, callback);
+        let entry = this.tail;
+        while (entry) {
+            callback(entry.key, entry.value, entry);
+            entry = entry.older;
+        }
+    }
+
+    getArray() {
+        let array = [],
+            entry = this.tail;
+        while (entry) {
+            array.push({
+                key: entry.key,
+                value: entry.value
+            });
+            entry = entry.older;
+        }
+
+        return array;
     }
 }
