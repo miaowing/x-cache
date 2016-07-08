@@ -4,7 +4,7 @@ A finite key-value cache support multi cache algorithm (LRU, FIFO, LFU...).
 
 ## Support cache algorithm
 | strategy      | description                   | todo  |
-| ------------- |------------------------------:| -----:|
+| ------------- |:------------------------------| -----:|
 | fifo          | First in First out (FIFO)     |       |
 | lru           | Least Recently Used (LRU)     |       |
 | lru-k         | Least Recently Used K (LRU-K) | todo  |
@@ -37,7 +37,7 @@ cache.remove('elwin'); // true
 cache.getSize(); // 2
 cache.getArray(); // [1234, 1233]
 cache.shift();
-cache.forEach((v, k, obj) => console.log(v, k)); // tom, 1234
+cache.forEach((v, k, obj) => console.log(v, k)); // 1234, tom
 cache.removeAll();
 ```
 
