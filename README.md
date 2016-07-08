@@ -4,12 +4,12 @@ A finite key-value cache support multi cache algorithm (LRU, FIFO, LFU...).
 
 ## Support cache algorithm
 | strategy      | description                   | todo  |
-| ------------- |:-----------------------------:| -----:|
+| ------------- |------------------------------:| -----:|
 | fifo          | First in First out (FIFO)     |       |
 | lru           | Least Recently Used (LRU)     |       |
 | lru-k         | Least Recently Used K (LRU-K) | todo  |
 | 2q            | Two queues (2Q)               | todo  |
-| lfu           | Least Frequently Used (LFU)   | todo  |
+| lfu           | Least Frequently Used (LFU)   |       |
 | ...           | ...                           | ...   |
 
 ## Usage
@@ -21,10 +21,13 @@ $ npm install x-cache --save
 ## Example
 ```javascript
 import {LruXCache, XCache} from 'x-cache';
+const cache = new LruXCache(1000);
 // or
 var XCache = require('x-cache').XCache;
+var cache = new XCache('lru', {
+    limit: 1000
+});
 
-const cache = new LruXCache(1000);
 cache.put('elwin', 1215);
 cache.put('leon', 1233);
 cache.put('tom', 1234);
@@ -49,6 +52,11 @@ Create a new cache instance.
 ### new LruXCache(limit)
 
 Create a new cache instance using LRU cache algorithm.
+* limit: limit the size of cache
+
+### new LfuXCache(limit)
+
+Create a new cache instance using LFU cache algorithm.
 * limit: limit the size of cache
 
 ### new FifoXCache(limit)

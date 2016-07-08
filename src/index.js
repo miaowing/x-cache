@@ -3,10 +3,13 @@
  */
 import LruXCache from './xcache.lru';
 import FifoXCache from './xcache.fifo';
+import LfuXCache from './xcache.lfu';
 
 exports.LruXCache = LruXCache;
 
 exports.FifoXCache = FifoXCache;
+
+exports.LfuXCache = LfuXCache;
 
 exports.XCache = function (strategy, option) {
     strategy = strategy || 'lru';

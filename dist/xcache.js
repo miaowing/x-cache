@@ -402,9 +402,197 @@
       return FifoXCache;
   }(XCache);
 
+  var LfuXCache = function (_XCache) {
+      inherits(LfuXCache, _XCache);
+
+      function LfuXCache() {
+          var limit = arguments.length <= 0 || arguments[0] === undefined ? 1000 : arguments[0];
+          classCallCheck(this, LfuXCache);
+          return possibleConstructorReturn(this, Object.getPrototypeOf(LfuXCache).call(this, limit));
+      }
+
+      createClass(LfuXCache, [{
+          key: '_remove',
+          value: function _remove(currentEntry) {
+              if (currentEntry.newer && currentEntry.older) {
+                  currentEntry.older.newer = currentEntry.newer;
+                  currentEntry.newer.older = currentEntry.older;
+              } else if (currentEntry.newer) {
+                  this.head = currentEntry.newer;
+                  currentEntry.newer.older = undefined;
+              } else if (currentEntry.older) {
+                  this.tail = currentEntry.older;
+                  currentEntry.older.newer = undefined;
+              }
+
+              currentEntry.newer = undefined;
+              currentEntry.older = undefined;
+
+              return currentEntry;
+          }
+      }, {
+          key: '_sort',
+          value: function _sort(currentEntry) {
+              var entry = currentEntry.newer;
+              entry && this._remove(currentEntry);
+
+              while (entry) {
+                  if (currentEntry.count < entry.count) {
+                      currentEntry.older = entry.older;
+                      currentEntry.newer = entry;
+                      entry.older.newer = currentEntry;
+                      entry.older = currentEntry;
+                      break;
+                  }
+
+                  if (entry === this.tail) {
+                      currentEntry.older = this.tail;
+                      this.tail.newer = currentEntry;
+                      this.tail = currentEntry;
+                      break;
+                  }
+
+                  entry = entry.newer;
+              }
+          }
+      }, {
+          key: 'shift',
+          value: function shift() {
+              var entry = this.head;
+
+              if (entry) {
+                  if (this.head.newer) {
+                      this.head = this.head.newer;
+                      this.head.older = undefined;
+                  } else {
+                      this.head = undefined;
+                  }
+
+                  entry.newer = entry.older = undefined;
+                  this._keymap.delete(entry.key);
+                  this.size--;
+              }
+
+              return entry;
+          }
+      }, {
+          key: 'put',
+          value: function put(key, value) {
+              var entry = this.get(key, true);
+
+              if (entry === undefined) {
+                  entry = { key: key, value: value, count: 0 };
+
+                  this._keymap.set(key, entry);
+
+                  if (this.size == this.limit) {
+                      this.shift();
+                  }
+
+                  if (this.head === undefined) {
+                      this.head = this.tail = entry;
+                  } else {
+                      entry.newer = this.head;
+                      this.head.older = entry;
+                      this.head = entry;
+                  }
+                  this.size++;
+              } else {
+                  this.size--;
+                  entry.value = value;
+              }
+
+              return entry;
+          }
+      }, {
+          key: 'get',
+          value: function get(key) {
+              var returnEntry = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
+
+              var entry = this._keymap.get(key);
+              if (entry === undefined) return;
+
+              entry.count++;
+              this._sort(entry);
+
+              return returnEntry ? entry : entry.value;
+          }
+      }, {
+          key: 'find',
+          value: function find(key) {
+              return !!this._keymap.get(key);
+          }
+      }, {
+          key: 'remove',
+          value: function remove(key) {
+              var entry = this._keymap.get(key);
+
+              if (entry !== undefined) {
+                  delete this._keymap[entry.key];
+                  this.size--;
+
+                  if (entry.newer && entry.older) {
+                      entry.older.newer = entry.newer;
+                      entry.newer.older = entry.older;
+                  } else if (entry.newer) {
+                      entry.newer.older = undefined;
+                      this.head = entry.newer;
+                  } else if (entry.older) {
+                      entry.older.newer = undefined;
+                      this.tail = entry.older;
+                  } else {
+                      this.head = this.tail = undefined;
+                  }
+
+                  return true;
+              }
+
+              return false;
+          }
+      }, {
+          key: 'removeAll',
+          value: function removeAll() {
+              this.head = this.tail = undefined;
+              this.size = 0;
+              this._keymap = new Map();
+          }
+      }, {
+          key: 'forEach',
+          value: function forEach(callback) {
+              var fromHead = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
+
+              var entry = fromHead ? this.head : this.tail;
+              while (entry) {
+                  callback(entry.key, entry.value, entry);
+                  entry = fromHead ? entry.newer : entry.older;
+              }
+          }
+      }, {
+          key: 'getArray',
+          value: function getArray() {
+              var fromHead = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
+
+              var array = [],
+                  entry = fromHead ? this.head : this.tail;
+              while (entry) {
+                  array.push({
+                      key: entry.key,
+                      value: entry.value
+                  });
+                  entry = fromHead ? entry.newer : entry.older;
+              }
+
+              return array;
+          }
+      }]);
+      return LfuXCache;
+  }(XCache);
+
   exports.LruXCache = LruXCache;
 
   exports.FifoXCache = FifoXCache;
+
+  exports.LfuXCache = LfuXCache;
 
   exports.XCache = function (strategy, option) {
       strategy = strategy || 'lru';
